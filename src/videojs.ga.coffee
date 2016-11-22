@@ -72,6 +72,29 @@ videojs.plugin 'ga', (options = {}) ->
       return eventNames[name]
     return name
 
+  getCommandName = ( name ) ->
+    if !window.ga || name == 'create'
+      return name
+
+    trackerName = getTrackerName()
+    if trackerName
+      return trackerName + '.' + name
+
+    return name
+
+  getTrackerName = () ->
+    if options.trackerName
+      return options.trackerName
+    if dataSetupOptions.trackerName
+      return dataSetupOptions.trackerName
+
+    if window.ga && window.ga.getAll
+      trackers = ga.getAll()
+      if trackers.length > 0
+        return trackers[0].get('name')
+
+    return null
+
   # load ga script if in iframe and tracker option is set
   if window.location.host == 'players.brightcove.net' || window.location.host == 'preview-players.brightcove.net'
     tracker = options.tracker || dataSetupOptions.tracker
@@ -203,7 +226,7 @@ videojs.plugin 'ga', (options = {}) ->
     if sendbeaconOverride
       sendbeaconOverride(eventCategory, action, eventLabel, value, nonInteraction)
     else if window.ga
-      ga 'send', 'event',
+      ga getCommandName('send'), 'event',
         'eventCategory' 	: eventCategory
         'eventAction'		  : action
         'eventLabel'		  : eventLabel
@@ -226,7 +249,7 @@ videojs.plugin 'ga', (options = {}) ->
 		if sendbeaconOverride
       sendbeaconOverride(eventCategory, getEventName('player_load'), href, iframe, true)
     else if window.ga
-      ga 'send', 'event',
+      ga getCommandName('send'), 'event',
         'eventCategory' 	: eventCategory
         'eventAction'		  : getEventName('player_load')
         'eventLabel'		  : href

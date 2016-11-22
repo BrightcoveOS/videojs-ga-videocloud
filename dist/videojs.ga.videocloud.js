@@ -1,13 +1,13 @@
 /*
-* videojs-ga - v0.4.1 - 2015-08-10
-* Copyright (c) 2015 Michael Bensoussan
+* videojs-ga - v0.4.2 - 2016-11-22
+* Copyright (c) 2016 Michael Bensoussan
 * Licensed MIT
 */
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   videojs.plugin('ga', function(options) {
-    var adStateRegex, currentVideo, dataSetupOptions, defaultLabel, defaultsEventsToTrack, end, endTracked, error, eventCategory, eventLabel, eventNames, eventsToTrack, fullscreen, getEventName, href, iframe, isInAdState, loaded, parsedOptions, pause, percentsAlreadyTracked, percentsPlayedInterval, play, player, referrer, resize, seekEnd, seekStart, seeking, sendbeacon, sendbeaconOverride, start, startTracked, timeupdate, tracker, volumeChange,
+    var adStateRegex, currentVideo, dataSetupOptions, defaultLabel, defaultsEventsToTrack, end, endTracked, error, eventCategory, eventLabel, eventNames, eventsToTrack, fullscreen, getCommandName, getEventName, getTrackerName, href, iframe, isInAdState, loaded, parsedOptions, pause, percentsAlreadyTracked, percentsPlayedInterval, play, player, referrer, resize, seekEnd, seekStart, seeking, sendbeacon, sendbeaconOverride, start, startTracked, timeupdate, tracker, volumeChange,
       _this = this;
     if (options == null) {
       options = {};
@@ -66,6 +66,33 @@
         return eventNames[name];
       }
       return name;
+    };
+    getCommandName = function(name) {
+      var trackerName;
+      if (!window.ga || name === 'create') {
+        return name;
+      }
+      trackerName = getTrackerName();
+      if (trackerName) {
+        return trackerName + '.' + name;
+      }
+      return name;
+    };
+    getTrackerName = function() {
+      var trackers;
+      if (options.trackerName) {
+        return options.trackerName;
+      }
+      if (dataSetupOptions.trackerName) {
+        return dataSetupOptions.trackerName;
+      }
+      if (window.ga && window.ga.getAll) {
+        trackers = ga.getAll();
+        if (trackers.length > 0) {
+          return trackers[0].get('name');
+        }
+      }
+      return null;
     };
     if (window.location.host === 'players.brightcove.net' || window.location.host === 'preview-players.brightcove.net') {
       tracker = options.tracker || dataSetupOptions.tracker;
@@ -199,7 +226,7 @@
       if (sendbeaconOverride) {
         sendbeaconOverride(eventCategory, action, eventLabel, value, nonInteraction);
       } else if (window.ga) {
-        ga('send', 'event', {
+        ga(getCommandName('send'), 'event', {
           'eventCategory': eventCategory,
           'eventAction': action,
           'eventLabel': eventLabel,
@@ -224,7 +251,7 @@
     if (sendbeaconOverride) {
       sendbeaconOverride(eventCategory, getEventName('player_load'), href, iframe, true);
     } else if (window.ga) {
-      ga('send', 'event', {
+      ga(getCommandName('send'), 'event', {
         'eventCategory': eventCategory,
         'eventAction': getEventName('player_load'),
         'eventLabel': href,
