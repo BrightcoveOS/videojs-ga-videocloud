@@ -62,6 +62,12 @@ If set, this tracker code will be used for iframe embeds and the direct player U
 
 **default:** Not set
 
+####trackerName
+
+If set, the tracker with this name will be used for in-page embeds.  This should match the ```name``` field sent in the GA ```create``` command for the tracker you want associated with the player.  If you don't know what it is please check [GA's doc](https://developers.google.com/analytics/devguides/collection/analyticsjs/creating-trackers)
+
+**default:** Not set
+
 ####eventNames
 
 Override or localise the names of the event actions.
