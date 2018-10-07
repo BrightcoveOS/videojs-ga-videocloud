@@ -1,5 +1,6 @@
 {
   "name": "videojs-ga-videocloud",
+  "description": "Google Analytics plugin for Brightcove Player in Video Cloud",
   "version": "0.5.0",
   "license": "MIT",
   "author": {
