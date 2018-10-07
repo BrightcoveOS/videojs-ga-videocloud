@@ -34,7 +34,7 @@ If you want use the standard (iframe) embed, you need to also add the tracker to
 You can configure the plugin with the [player management API](http://docs.brightcove.com/en/video-cloud/player-management/index.html) instead of the GUI studio. For example, to add the plugin to an existing player:
 
 ```bash
-curl --header "Content-Type: application/json" --user $EMAIL --request PATCH --data '{"scripts":["https://unpkg.com/videojs-ga-videocloud@dist/videojs-ga-videocloud.min.js.js"],"plugins":[{"name":"ga","options":{"tracker":"UA-1234567-8","eventNames":{"play":"Wiedergabe"}}}]}' https://players.api.brightcove.com/v1/accounts/$ACCOUNT_ID/players/$PLAYER_ID/configuration
+curl --header "Content-Type: application/json" --user $EMAIL --request PATCH --data '{"scripts":["https://unpkg.com/videojs-ga-videocloud/dist/videojs.ga.videocloud.min.js"],"plugins":[{"name":"ga","options":{"tracker":"UA-1234567-8","eventNames":{"play":"Wiedergabe"}}}]}' https://players.api.brightcove.com/v1/accounts/$ACCOUNT_ID/players/$PLAYER_ID/configuration
 ```
 
 ### Standard vs Advanced Embed
