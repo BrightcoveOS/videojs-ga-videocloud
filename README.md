@@ -12,12 +12,14 @@ This plugin was forked from the open source plugin written for video.js [videojs
 - The plugin will not track events when the player is viewed in the Video Cloud Studio.
 
 ## Getting Started
-* Download the plugin and place on your server.
+
+- If you want to self-host, download the plugin from `dist/` and place on your server. Alternatively use the version hosted by [unpkg](https://unpkg.com) at https://unpkg.com/videojs-ga-videocloud@dist/videojs-ga-videocloud.min.js.js
 
 ### Studio configuration
-* Edit the player configuration in the [Players Module of Video Cloud Studio](https://studio.brightcove.com/products/videocloud/players).
-* Under _Plugins>JavaScript_, add the URL to the plugin to the player configuration and click +.
-* Under _Plugins>Name, Options (JSON)_, enter `ga` as the name and click `+`.
+
+- Edit the player configuration in the [Players Module of Video Cloud Studio](https://studio.brightcove.com/products/videocloud/players).
+- Under _Plugins>JavaScript_, add the URL to the plugin to the player configuration and click +.
+- Under _Plugins>Name, Options (JSON)_, enter `ga` as the name and click `+`.
 
 If you want use the standard (iframe) embed, you need to also add the tracker to the plugin configuration under _Plugins>Name, Options (JSON)_:
 
@@ -32,16 +34,16 @@ If you want use the standard (iframe) embed, you need to also add the tracker to
 You can configure the plugin with the [player management API](http://docs.brightcove.com/en/video-cloud/player-management/index.html) instead of the GUI studio. For example, to add the plugin to an existing player:
 
 ```bash
-curl --header "Content-Type: application/json" --user $EMAIL --request PATCH --data '{"scripts":["http://example.com/videojs.ga.videocloud.js"],"plugins":[{"name":"ga","options":{"tracker":"UA-1234567-8","eventNames":{"play":"Wiedergabe"}}}]}' https://players.api.brightcove.com/v1/accounts/$ACCOUNT_ID/players/$PLAYER_ID/configuration
+curl --header "Content-Type: application/json" --user $EMAIL --request PATCH --data '{"scripts":["https://unpkg.com/videojs-ga-videocloud@dist/videojs-ga-videocloud.min.js.js"],"plugins":[{"name":"ga","options":{"tracker":"UA-1234567-8","eventNames":{"play":"Wiedergabe"}}}]}' https://players.api.brightcove.com/v1/accounts/$ACCOUNT_ID/players/$PLAYER_ID/configuration
 ```
 
 ### Standard vs Advanced Embed
 
-If you use the standard (iframe) embed, make sure you include the tracker in the player configuration.
+If using the iframe embed, you must specify the tracker in the player config. The reacking script will be loaded.
 
-If you use the advanced (in-page) embed, the player will track events to the GA tracker on the page. That tracker must load before the player.
+If you use the advanced (in-page) embed, the player will track events to the GA tracker on the page. That tracker must load before the player initialises. The plugin will _not_ load Google Analytics.
 
-By using the embed the events are tracked in context with the rest of the visitor's interactions with the page.
+When using the advanced embed the events are tracked in context with the rest of the visitor's interactions with the page. When using the iframe they are isolated to the player iframe.
 
 ### Classic and Universal Analytics
 
@@ -64,7 +66,7 @@ Provide options to the plugin in the player configuraiton using `ga` as the name
 
 The following options are supported:
 
-#### tracker
+### tracker
 
 - If set, this tracker code will be used for iframe embeds and the direct player URL.
 - If set and `trackerName` is not set on an in-page embed, this is not used.
@@ -117,15 +119,16 @@ This is the ```label``` sent to GA. If you don't know what it is please check [G
 The events you want to track. For example `start` (playback started for the first time) and `end` are probably more interesting than `play` and `pause`.
 
 **default:**
+
 ```
 [ 'player_load', 'video_load', 'percent_played', 'start', 'end', 'seek', 'play', 'pause', 'resize', 'volume_change', 'error', 'fullscreen']
 ```
 
-* `player_load` Player has loaded.
-* `video_load` Video has loaded. Will fire again when a new video is loaded.
-* `percent_played` Every *x*% of the video, with the percentage as a value, where *x* is defined by `percentsPlayedInterval`. Default is 10.
-* `start` Playback has started. Once per video load.
-* `end` Playback has completed. Once per video load.
+- `player_load` Player has loaded.
+- `video_load` Video has loaded. Will fire again when a new video is loaded.
+- `percent_played` Every *x*% of the video, with the percentage as a value, where *x* is defined by `percentsPlayedInterval`. Default is 10.
+- `start` Playback has started. Once per video load.
+- `end` Playback has completed. Once per video load.
 
 #### percentsPlayedInterval
 
@@ -140,11 +143,12 @@ If set to false, console logs will be omited
 
 #### sendbeaconOverride
 In the event you want to do something custom for all tracked events, use this option to pass a callback function to the plugin. The callback will have access to the following variables and will **override the plugin's native tracking methods**:
-* `eventCategorty`
-* `action`
-* `eventLabel`
-* `value`
-* `nonInteraction`
+
+- `eventCategory`
+- `action`
+- `eventLabel`
+- `value`
+- `nonInteraction`
 
 ## TODO
 
