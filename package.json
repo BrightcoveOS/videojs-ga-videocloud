@@ -1,7 +1,7 @@
 {
   "name": "videojs-ga-videocloud",
   "description": "Google Analytics plugin for Brightcove Player in Video Cloud",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "license": "MIT",
   "homepage": "https://github.com/BrightcoveOS/videojs-ga-videocloud",
   "repository": {

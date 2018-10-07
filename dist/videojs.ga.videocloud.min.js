@@ -1,5 +1,5 @@
 /*
-* videojs-ga-videocloud - v0.5.2 - 2018-10-07
+* videojs-ga-videocloud - v0.5.3 - 2018-10-07
 * Based on videojs-ga 0.4.2
 * https://github.com/BrightcoveOS/videojs-ga-videocloud
 * Copyright (c) 2018 Michael Bensoussan
