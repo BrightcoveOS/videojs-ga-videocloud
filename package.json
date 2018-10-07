@@ -21,5 +21,8 @@
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-coffee": "~0.4.0",
     "grunt-contrib-uglify": "^4.0.0"
+  },
+  "scripts": {
+    "version": "grunt"
   }
 }
