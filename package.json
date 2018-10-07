@@ -28,6 +28,6 @@
     "grunt-contrib-uglify": "^4.0.0"
   },
   "scripts": {
-    "version": "grunt"
+    "version": "grunt && git add -A dist"
   }
 }
