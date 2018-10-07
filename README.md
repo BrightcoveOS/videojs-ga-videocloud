@@ -2,18 +2,16 @@
 
 Google Analytics plugin for the Brightcove player.
 
-*Note this is not compatible with the Brightcove Smart Player which uses a different plugin architecture and API.*
-
 This plugin was forked from the open source plugin written for video.js [videojs.ga](https://github.com/mickey/videojs-ga) to add changes specific to the Brightcove Player. Main changes from the original:
 
 - The video ID and name are read from the player and tracked as the event label.
 - Works with the standard (iframe) embed and direct player links: If a tracker is set in the plugin options, the Google universal analytics script will be loaded.
-- Event names tracked are those used by the Smart Player plugins, where applicable. Event names can be customised / localised with plugin options.
+- Default event names match those used by an implemnt of Google Analytics for an older Brightcove player version for continuity. Event names can be customised / localised with plugin options.
 - The plugin will not track events when the player is viewed in the Video Cloud Studio.
 
 ## Getting Started
 
-- If you want to self-host, download the plugin from `dist/` and place on your server. Alternatively use the version hosted by [unpkg](https://unpkg.com) at https://unpkg.com/videojs-ga-videocloud@dist/videojs-ga-videocloud.min.js.js
+- If you want to self-host, download the plugin from `dist/` and place on your server. Alternatively use the version hosted by [unpkg](https://unpkg.com) at https://unpkg.com/videojs-ga-videocloud/dist/videojs.ga.videocloud.min.js
 
 ### Studio configuration
 
@@ -27,14 +25,6 @@ If you want use the standard (iframe) embed, you need to also add the tracker to
 {
     "tracker": "UA-1234567-8"
 }
-```
-
-### Configuration with the Player Management API
-
-You can configure the plugin with the [player management API](http://docs.brightcove.com/en/video-cloud/player-management/index.html) instead of the GUI studio. For example, to add the plugin to an existing player:
-
-```bash
-curl --header "Content-Type: application/json" --user $EMAIL --request PATCH --data '{"scripts":["https://unpkg.com/videojs-ga-videocloud/dist/videojs.ga.videocloud.min.js"],"plugins":[{"name":"ga","options":{"tracker":"UA-1234567-8","eventNames":{"play":"Wiedergabe"}}}]}' https://players.api.brightcove.com/v1/accounts/$ACCOUNT_ID/players/$PLAYER_ID/configuration
 ```
 
 ### Standard vs Advanced Embed
