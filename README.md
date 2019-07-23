@@ -1,3 +1,7 @@
+This project is now obsolete. See the link below for Google Analytics tracking with the Brightcove Player:
+
+https://support.brightcove.com/configuring-google-analytics-event-tracking
+
 # Google Analytics for Brightcove player
 
 Google Analytics plugin for the Brightcove player.
